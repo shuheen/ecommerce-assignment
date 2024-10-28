@@ -1,9 +1,12 @@
 // types/types.ts
 export interface Product {
   id: number;
-  name: string;
+  title: string;
   price: number;
-  image: string;
+  images: string[];
   category: string;
 }
 
+export interface ProductsList {
+  products: Product[];
+}

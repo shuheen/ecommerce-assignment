@@ -1,32 +1,78 @@
-// components/ProductList.tsx
-import {useQuery} from 'react-query';
-import {Product} from './../../types/product';
+// ProductList.tsx
+import {useInfiniteQuery} from 'react-query';
+import {Product, ProductsList} from './../../types/product';
 import ProductCard from '../../components/ProductCard/ProductCard';
-import CategoriesFilterTop from '../../components/CategoriesFilterTop/CategoriesFilterTop';
-import { fetchProducts } from '../../services/products';
-import { fetchCategories } from '../../services/categories';
-
-
+import CategoriesFilterTop from './CategoriesFilterTop/CategoriesFilterTop';
+import {fetchProducts} from '../../services/products';
+import {useState, useRef, useCallback, useEffect} from 'react';
+import ProductListPageLoader from '../../components/Loader/ProductListPageLoader/ProductListPageLoader';
+import {showErrorToast} from '../../utils/toastUtils';
 
 export default function ProductList() {
-  const {data:products, error:productsError, isLoading:productsLoading} = useQuery<Product[]>('/products', fetchProducts);
-  const {data: categories, error: categoriesError, isLoading: categoriesLoading} = useQuery<string[]>('/products/categories', fetchCategories);
+  const [selectedCategory, setSelectedCategory] = useState('all');
+  const limit = 10; // Set limit for products per page
+  const loadMoreRef = useRef<HTMLDivElement | null>(null);
 
-  if (productsLoading || categoriesError) return <div>Loading...</div>;
-  if (productsError || categoriesLoading) return <div>Error fetching products</div>;
-console.log(categories)
-    return (
-      <div className="bg-gray-50">
-        <div className="max-w-screen-xl mx-auto ">
-            <div className="mt-[60px]">
-                <CategoriesFilterTop categories={categories!} />
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 px-4 py-6">
-                {products?.map((product) => (
-                    <ProductCard key={product.id} {...product} />
-                ))}
-                </div>
-          </div>
+  const {data, error, fetchNextPage, hasNextPage, isFetchingNextPage, isLoading} = useInfiniteQuery<ProductsList>(
+    ['products', selectedCategory],
+    ({pageParam = 0}) => fetchProducts(selectedCategory, pageParam, limit),
+    {
+      getNextPageParam: (lastPage, allPages) => {
+        return lastPage.products.length < limit ? undefined : allPages.length * limit;
+      },
+    }
+  );
+
+  const handleOnChange = (value: string) => {
+    setSelectedCategory(value);
+  };
+
+  const observer = useRef<IntersectionObserver | null>(null);
+  const loadMore = useCallback(
+    (node: HTMLDivElement) => {
+      if (isFetchingNextPage) return;
+      if (observer.current) observer.current.disconnect();
+
+      observer.current = new IntersectionObserver((entries) => {
+        if (entries[0].isIntersecting && hasNextPage) {
+          fetchNextPage();
+        }
+      });
+
+      if (node) observer.current.observe(node);
+    },
+    [isFetchingNextPage, fetchNextPage, hasNextPage]
+  );
+
+  // Show error toast if there's an error
+  useEffect(() => {
+    if (error) {
+      showErrorToast('Something went wrong while fetching products.');
+    }
+  }, [error]);
+
+  return (
+    <div className="bg-gray-50 pb-24">
+      <div className="max-w-screen-xl mx-auto">
+        <CategoriesFilterTop onChange={handleOnChange} selected={selectedCategory} />
+
+        {isLoading && <ProductListPageLoader />}
+
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 px-4 py-6">
+          {data?.pages.map((page) =>
+            page.products.map((product: Product) => <ProductCard key={product.id} {...product} />)
+          )}
+        </div>
+
+        {/* Infinite Scroll Loader */}
+        <div ref={loadMoreRef} className="flex justify-center py-4">
+          {isFetchingNextPage ? (
+            <span className="text-gray-500">Loading more products...</span>
+          ) : (
+            <div ref={loadMore} />
+          )}
         </div>
       </div>
-    );
+    </div>
+  );
 }
