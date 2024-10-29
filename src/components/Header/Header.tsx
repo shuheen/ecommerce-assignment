@@ -4,8 +4,9 @@ import {Link} from 'react-router-dom';
 import {useRecoilValue} from 'recoil';
 import {cartAtom} from '../../state/cartAtom';
 import {getAuth, onAuthStateChanged, signOut} from 'firebase/auth';
-import AutoComplete from '../AutoComplete/AutoComplete';
 import ProductSearch from '../ProductSearch/ProductSearch';
+import {CiLogout} from 'react-icons/ci';
+import {LuLogOut} from 'react-icons/lu';
 
 const Header = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -25,36 +26,69 @@ const Header = () => {
   };
 
   return (
-    <header className="fixed top-0 left-0 w-full">
-      <nav className="bg-white border-b w-full border-gray-200 px-4 lg:px-6 py-2.5 dark:bg-gray-80">
-        <div className="flex flex-wrap justify-between items-center mx-auto max-w-screen-xl px-4">
-          <Link to="/" className="font-extrabold text-gray-800 text-3xl text-center">
-            ECOMMERCE APP
+    <header className="fixed top-0 left-0 w-full bg-white shadow-md z-10">
+      <nav className="border-b border-gray-200 px-4 py-3 lg:px-6">
+        <div className="flex flex-wrap justify-between items-center mx-auto max-w-screen-xl">
+          <Link to="/" className="font-extrabold text-gray-800 text-xl">
+            E-COMMERCE APP
           </Link>
 
-          <div className="flex items-center lg:order-2 gap-4">
-            <ProductSearch />
-            <Link to="/cart" className="p-2 hover:bg-gray-300 rounded-lg relative">
-              <FaCartShopping size={24} className="text-gray-600" />
-              <span className="absolute top-0 right-0 w-[20px] h-[20px] bg-red-500 text-white p-1 py-[2px] rounded-full text-xs text-center font-medium">
-                {cartCount}
-              </span>
-            </Link>
-            {isAuthenticated ? (
-              <button
-                onClick={handleLogout}
-                className="text-gray-800 hover:bg-gray-100 font-medium rounded-lg text-sm px-4 py-2 mr-2"
-              >
-                Logout
-              </button>
-            ) : (
-              <Link
-                to="/login"
-                className="text-white bg-sky-800 hover:bg-sky-600 focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-4 py-2 mr-2"
-              >
-                Log in
+          <div className="flex items-center gap-4">
+            {/* Cart and Auth Buttons for Large Screens */}
+            <div className="hidden md:flex items-center gap-4">
+              <ProductSearch />
+              <Link to="/cart" className="p-2 hover:bg-gray-300 rounded-lg relative">
+                <FaCartShopping size={24} className="text-gray-600" />
+                <span className="absolute top-0 right-0 w-5 h-5 bg-red-500 text-white rounded-full text-xs text-center font-medium">
+                  {cartCount}
+                </span>
               </Link>
-            )}
+              {isAuthenticated ? (
+                <button
+                  onClick={handleLogout}
+                  className="text-gray-800 hover:bg-gray-100 font-medium rounded-lg text-sm px-4 py-2"
+                >
+                  Logout
+                </button>
+              ) : (
+                <Link
+                  to="/login"
+                  className="text-white bg-orange-800 hover:bg-orange-600 font-medium rounded-lg text-sm px-4 py-2"
+                >
+                  Log in
+                </Link>
+              )}
+            </div>
+
+            {/* Mobile View: Cart and Auth Buttons */}
+            <div className="flex md:hidden items-center gap-4">
+              <Link to="/cart" className="p-2 hover:bg-gray-300 rounded-lg relative">
+                <FaCartShopping size={24} className="text-gray-600" />
+                <span className="absolute top-0 right-0 w-5 h-5 bg-red-500 text-white rounded-full text-xs text-center font-medium">
+                  {cartCount}
+                </span>
+              </Link>
+              {isAuthenticated ? (
+                <button
+                  onClick={handleLogout}
+                  className="text-gray-800 hover:bg-gray-100 font-medium rounded-lg text-sm px-4 pr-0 py-2"
+                >
+                  <LuLogOut size={20} />
+                </button>
+              ) : (
+                <Link
+                  to="/login"
+                  className="text-white bg-orange-800 hover:bg-orange-600 font-medium rounded-lg text-sm px-4 py-2"
+                >
+                  Log in
+                </Link>
+              )}
+            </div>
+          </div>
+
+          {/* Mobile View: Full-width Search Bar */}
+          <div className="w-full md:hidden mt-3">
+            <ProductSearch />
           </div>
         </div>
       </nav>

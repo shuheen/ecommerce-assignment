@@ -18,4 +18,9 @@ const fetchProductsByQuery = async (query: string, skip: number = 0, limit: numb
   return response.data;
 };
 
-export {fetchProducts, fetchProductsByQuery};
+const fetchProductDetails = async (id: number) => {
+  const {data} = await api.get(`/products/${id}`);
+  return data;
+};
+
+export {fetchProducts, fetchProductsByQuery, fetchProductDetails};

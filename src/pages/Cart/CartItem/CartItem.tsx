@@ -1,3 +1,4 @@
+import {motion} from 'framer-motion';
 import {BsTrash} from 'react-icons/bs';
 import {FiMinus} from 'react-icons/fi';
 import {BiPlus} from 'react-icons/bi';
@@ -11,7 +12,13 @@ interface CartItemProps {
 
 const CartItem = ({item, onRemove, onQuantityChange}: CartItemProps) => {
   return (
-    <div className="grid grid-cols-3 items-start gap-4">
+    <motion.div
+      initial={{opacity: 0, x: -50}} // Start slightly above and transparent
+      animate={{opacity: 1, x: 0}} // Animate to original position and full opacity
+      exit={{opacity: 0, x: -50}} // Animate back to the above position and transparent when removed
+      transition={{duration: 0.3}} // Duration of the animation
+      className="grid grid-cols-3 items-start gap-4"
+    >
       <div className="col-span-2 flex items-start gap-4">
         <div className="w-28 h-28 max-sm:w-24 max-sm:h-24 shrink-0 bg-gray-100 p-2 rounded-md">
           <img src={item.images[0]} alt={item.title} className="w-full h-full object-contain" />
@@ -40,7 +47,7 @@ const CartItem = ({item, onRemove, onQuantityChange}: CartItemProps) => {
           <BiPlus className="cursor-pointer" onClick={() => onQuantityChange('inc', item.id)} />
         </div>
       </div>
-    </div>
+    </motion.div>
   );
 };
 

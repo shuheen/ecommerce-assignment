@@ -2,77 +2,67 @@ import {useRecoilState} from 'recoil';
 import {cartAtom} from '../../state/cartAtom';
 import {Product} from '../../types/product';
 import {CartItem} from '../../types/cart';
-import {BiPlus} from 'react-icons/bi';
-import {FiMinus} from 'react-icons/fi';
-import {showSuccessToast, showWarningToast} from '../../utils/toastUtils'; // Adjust the import path
+import {addOneItem, addToCart, removeFromCart, removeOneItem} from '../../utils/products';
+import {GrCart} from 'react-icons/gr';
+import {Link} from 'react-router-dom';
+import {BaseSyntheticEvent} from 'react';
+import CartQuantityControl from './../../components/CartQuantityControl/CartQuantityControl';
 
-const ProductCard = ({id, images, title, price, category}: Product) => {
-  const [cart, setCart] = useRecoilState(cartAtom);
+const ProductCard = ({id, images, title, price, category, thumbnail}: Product) => {
+  const [cart, setCart] = useRecoilState<CartItem[]>(cartAtom);
 
-  const handleAddToCart = () => {
-    setCart((prevCart: CartItem[]) => {
-      const existingItem = prevCart.find((item) => item.id === id);
-
-      if (existingItem) {
-        // Increment the quantity if the item already exists in the cart
-        return prevCart.map((item) => (item.id === id ? {...item, quantity: item.quantity + 1} : item)) as CartItem[];
-      } else {
-        // Add a new item to the cart
-        const newItem: CartItem = {id, images, title, price, category, quantity: 1};
-        showSuccessToast(`${title} added to cart!`); // Show success toast
-        return [...prevCart, newItem];
-      }
-    });
+  const handleAddToCart = (e: BaseSyntheticEvent) => {
+    e.preventDefault();
+    setCart((prevCart) => addToCart(prevCart, id, images, title, price, category));
   };
 
-  const handleIncrement = () => {
-    setCart(
-      (prevCart: CartItem[]) =>
-        prevCart.map((item) => (item.id === id ? {...item, quantity: item.quantity + 1} : item)) as CartItem[]
-    );
+  const handleIncrement = (e: BaseSyntheticEvent) => {
+    e.preventDefault();
+    setCart((prevCart) => addOneItem(prevCart, id));
   };
 
-  const handleDecrement = () => {
-    setCart((prevCart: CartItem[]) => {
-      const updatedCart = prevCart
-        .map((item) => (item.id === id ? {...item, quantity: item.quantity - 1} : item))
-        .filter((item) => item.quantity > 0) as CartItem[];
-
-      if (updatedCart.length < prevCart.length) {
-        // If the length of the updated cart is less than the previous cart,
-        // it means an item was removed.
-        showWarningToast(`${title} removed from cart!`); // Show success toast
-      }
-
-      return updatedCart;
-    });
+  const handleDecrement = (e: BaseSyntheticEvent) => {
+    e.preventDefault();
+    setCart((prevCart) => removeOneItem(prevCart, id, title));
   };
 
-  const cartItem = cart.find((item: CartItem) => item.id === id);
+  const handleRemoveFromCart = (e: BaseSyntheticEvent) => {
+    e.preventDefault();
+    setCart((prevCart) => removeFromCart(prevCart, id, title));
+  };
+
+  const cartItem = cart.find((item) => item.id === id);
 
   return (
-    <div key={id} className="bg-white p-4 shadow-md rounded-lg hover:shadow-lg transition-shadow">
-      <img loading="lazy" src={images[0]} alt={title} className="w-full h-40 object-contain rounded-md" />
+    <Link
+      to={`/products/${id}`}
+      key={id}
+      className="bg-white p-4 shadow-md rounded-lg hover:shadow-lg transition-shadow"
+    >
+      <img loading="lazy" src={thumbnail} alt={title} className="w-full h-40 object-contain rounded-md" />
       <h2 title={title} className="mt-2 text-lg font-semibold line-clamp-1">
         {title}
       </h2>
       <p className="text-gray-600">${price}</p>
+
       {cartItem ? (
-        <div className="mt-4 flex items-center justify-between">
-          <button onClick={handleDecrement} className="px-3 py-3 bg-sky-600 text-white rounded-l hover:bg-sky-700">
-            <FiMinus />
-          </button>
-          <span className="px-4 py-2 bg-gray-100 flex-1 text-center text-black">{cartItem.quantity}</span>
-          <button onClick={handleIncrement} className="px-3 py-3 bg-sky-600 text-white rounded-r hover:bg-sky-700">
-            <BiPlus />
+        <CartQuantityControl
+          quantity={cartItem.quantity}
+          onIncrement={(e) => handleIncrement(e!)}
+          onDecrement={(e) => handleDecrement(e!)}
+          onRemove={(e) => handleRemoveFromCart(e!)}
+        />
+      ) : (
+        <div className="flex justify-between items-center">
+          <button
+            onClick={(e) => handleAddToCart(e)}
+            className="mt-4 px-4 py-2 bg-orange-600 text-white rounded hover:bg-orange-70 flex justify-between gap-4 items-center"
+          >
+            <GrCart /> Add to Cart
           </button>
         </div>
-      ) : (
-        <button onClick={handleAddToCart} className="mt-4 px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600">
-          Add to Cart
-        </button>
       )}
-    </div>
+    </Link>
   );
 };
 

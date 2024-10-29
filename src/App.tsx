@@ -6,6 +6,7 @@ import Cart from './pages/Cart/Cart';
 import Login from './pages/Authentication/Login/Login';
 import Register from './pages/Authentication/Register/Register';
 import {ProtectedRoute, UnprotectedRoute} from './routes/Routes'; // Adjust path as necessary
+import ProductDetails from './pages/ProductDetails/ProductDetails';
 
 function App() {
   return (
@@ -13,6 +14,7 @@ function App() {
       <Route element={<ProtectedRoute />}>
         <Route path="/" element={<ProductList />} />
         <Route path="/products" element={<ProductList />} />
+        <Route path="/products/:id" element={<ProductDetails />} />
         <Route path="/cart" element={<Cart />} />
       </Route>
 

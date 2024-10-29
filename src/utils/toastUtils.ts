@@ -1,4 +1,3 @@
-// toastUtils.ts
 import {toast} from 'react-toastify';
 import {toastConfig} from '../config/toast';
 

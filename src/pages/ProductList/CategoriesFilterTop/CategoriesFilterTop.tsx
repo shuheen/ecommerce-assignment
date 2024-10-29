@@ -34,16 +34,19 @@ const CategoriesFilterTop = ({onChange, selected}: CategoriesFilterTopProps) => 
   }
 
   return (
-    <div className="py-5 flex gap-4 px-4 items-center ">
+    <div className="py-5 flex-col gap-6 sm:gap-4 px-4 items-center sm:flex-row">
       <span className="cat text-md font-bold">Categories</span>
-      <div ref={scrollRef} className="categories-list flex gap-3 overflow-hidden py-2 overflow-x-scroll hide-scrollbar">
+      <div
+        ref={scrollRef}
+        className="categories-list flex gap-3 overflow-hidden py-4 sm:py-2 overflow-x-scroll hide-scrollbar"
+      >
         {isLoading ? (
           <CategoriesCardLoader />
         ) : (
           <button
             className={`rounded-full border font-medium px-7 py-2 ${
               selected === 'all'
-                ? 'border-sky-700 text-white hover:bg-sky-900 bg-sky-700'
+                ? 'border-orange-700 text-white hover:bg-orange-900 bg-orange-700'
                 : 'text-gray-600 border-gray-400 hover:bg-gray-200'
             }`}
             onClick={() => handleClick('all')}
@@ -60,7 +63,7 @@ const CategoriesFilterTop = ({onChange, selected}: CategoriesFilterTopProps) => 
               key={categoryId}
               className={`rounded-full border font-medium px-7 py-2 text-nowrap ${
                 selected === categoryId
-                  ? 'border-sky-700 text-white hover:bg-sky-900 bg-sky-700'
+                  ? 'border-orange-700 text-white hover:bg-orange-900 bg-orange-700'
                   : 'text-gray-600 border-gray-400 hover:bg-gray-200'
               }`}
               onClick={() => handleClick(categoryId)}

@@ -70,7 +70,7 @@ const AutoComplete = ({
   }, [loadMore, hasMore]);
 
   return (
-    <div ref={wrapperRef} className={`max-w-md mx-auto ${className}`}>
+    <div ref={wrapperRef} className={`max-w-full sm:max-w-md mx-auto ${className}`}>
       <label htmlFor="autocomplete-search" className="mb-2 text-sm font-medium text-gray-900 sr-only">
         Search
       </label>

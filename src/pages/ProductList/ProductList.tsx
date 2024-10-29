@@ -1,4 +1,3 @@
-// ProductList.tsx
 import {useInfiniteQuery} from 'react-query';
 import {Product, ProductsList} from './../../types/product';
 import ProductCard from '../../components/ProductCard/ProductCard';
@@ -51,16 +50,33 @@ export default function ProductList() {
     }
   }, [error]);
 
+  // Flatten all pages of products into a single array
+  const products = data?.pages.flatMap((page) => page.products) || [];
+
   return (
     <div className="bg-gray-50 pb-24">
       <div className="max-w-screen-xl mx-auto">
         <CategoriesFilterTop onChange={handleOnChange} selected={selectedCategory} />
 
-        {isLoading && <ProductListPageLoader />}
-
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 px-4 py-6">
-          {data?.pages.map((page) =>
-            page.products.map((product: Product) => <ProductCard key={product.id} {...product} />)
+        <div className={`${products.length && 'grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4'} px-4 py-6`}>
+          {isLoading ? (
+            // Show loading indicator only for products
+            <ProductListPageLoader />
+          ) : error ? (
+            <div className="h-screen flex flex-col justify-center items-center">
+              <span className="text-lg font-bold text-gray-500">Something went wrong...</span>
+            </div>
+          ) : products.length === 0 ? (
+            // Show message when there are no products
+            <div className="h-[calc(100vh-340px)] flex flex-col justify-center items-center w-full">
+              <img src="/images/no-product.webp" className="max-w-[250px]" alt="No Products" />
+              <span className="text-lg font-bold text-gray-500">No Products Found</span>
+            </div>
+          ) : (
+            // Render product cards when data is available
+            data?.pages.map((page) =>
+              page.products.map((product: Product) => <ProductCard key={product.id} {...product} />)
+            )
           )}
         </div>
 

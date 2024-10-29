@@ -18,7 +18,7 @@ const ProtectedRoute: React.FC = () => {
   if (isAuthenticated === null) return <LoaderMutationDots />; // Optionally, add a loading state
 
   return isAuthenticated ? (
-    <div className="mt-[65px]">
+    <div className="mt-[120px] sm:mt-[70px]">
       <Outlet />
     </div>
   ) : (

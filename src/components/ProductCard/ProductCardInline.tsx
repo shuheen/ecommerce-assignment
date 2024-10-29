@@ -1,4 +1,3 @@
-import React from 'react';
 import {Product} from '../../types/product';
 import {Link} from 'react-router-dom';
 
@@ -6,10 +5,10 @@ const ProductCardInline = ({title, images, id, price}: Product) => {
   return (
     <Link
       to={`/products/${id}`}
-      className="flex flex-col gap-3 items-center bg-white border border-gray-200 rounded-lg shadow md:flex-row md:max-w-xl hover:bg-gray-100 dark:border-gray-700 dark:bg-gray-800 dark:hover:bg-gray-700 p-2 mb-1"
+      className="flex gap-3 items-center bg-white border border-gray-200 rounded-lg shadow md:flex-row md:max-w-xl hover:bg-gray-100 dark:border-gray-700 dark:bg-gray-800 dark:hover:bg-gray-700 p-2 mb-1"
     >
       <img
-        className="object-contain w-full rounded-t-lg  max-h-12 md:h-auto md:w-12 md:rounded-none md:rounded-s-lg"
+        className="object-contain w-12 rounded-t-lg  max-h-12 md:h-auto md:rounded-none md:rounded-s-lg"
         src={images[0]}
         alt={title}
       />

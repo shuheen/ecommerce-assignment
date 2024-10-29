@@ -1,5 +1,4 @@
-// ProductSearch.tsx
-import React, {useState} from 'react';
+import {useState} from 'react';
 import {useInfiniteQuery} from 'react-query';
 import {debounce} from 'lodash';
 import AutoComplete from './../AutoComplete/AutoComplete';
@@ -28,7 +27,7 @@ const ProductSearch = () => {
 
   return (
     <AutoComplete
-      className="w-[500px]"
+      className="w-full sm:w-[380px]"
       placeholder="Search products..."
       onSearch={handleInputChange}
       suggestions={data?.pages.flatMap((page) => page.products) || []}

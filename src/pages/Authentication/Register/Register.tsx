@@ -129,7 +129,7 @@ const Register = () => {
               <div className="!mt-8">
                 <button
                   type="submit"
-                  className="w-full py-3 px-4 text-sm tracking-wide rounded-lg text-white bg-sky-700 hover:bg-sky-800 focus:outline-none"
+                  className="w-full py-3 px-4 text-sm tracking-wide rounded-lg text-white bg-orange-700 hover:bg-orange-800 focus:outline-none"
                 >
                   Register
                 </button>
