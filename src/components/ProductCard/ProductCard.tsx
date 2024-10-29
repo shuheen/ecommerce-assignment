@@ -4,7 +4,7 @@ import {Product} from '../../types/product';
 import {CartItem} from '../../types/cart';
 import {addOneItem, addToCart, removeFromCart, removeOneItem} from '../../utils/products';
 import {GrCart} from 'react-icons/gr';
-import {BaseSyntheticEvent, useCallback, useEffect, useState} from 'react';
+import {BaseSyntheticEvent, useState} from 'react';
 import CartQuantityControl from './../../components/CartQuantityControl/CartQuantityControl';
 import MotionLink from '../MotionLink/MotionLink';
 import {motion, useAnimation} from 'framer-motion';

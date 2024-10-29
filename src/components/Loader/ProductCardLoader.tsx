@@ -1,5 +1,3 @@
-import CategoriesCardLoader from './CategoriesCardLoader';
-
 const ProductCardLoader = () => {
   return (
     <div

@@ -1,20 +1,8 @@
 // components/Input.tsx
 import React from 'react';
+import {InputProps} from '../../types/components/input';
 
-interface InputProps {
-  name: string;
-  type: string;
-  placeholder: string;
-  value: string;
-  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
-  required?: boolean;
-  showIcon?: boolean;
-  icon?: React.ReactNode;
-  onClickIcon?: () => void; // Added this prop
-  className?: string;
-}
-
-const Input: React.FC<InputProps> = ({
+const Input = ({
   name,
   type,
   placeholder,
@@ -25,7 +13,7 @@ const Input: React.FC<InputProps> = ({
   icon,
   onClickIcon,
   className = '',
-}) => {
+}: InputProps) => {
   return (
     <div className="relative flex items-center">
       <input

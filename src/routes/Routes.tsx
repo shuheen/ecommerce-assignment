@@ -5,7 +5,7 @@ import {auth} from './../setups/firebaseSetup'; // Adjust based on your setup
 import LoaderMutationDots from '../components/Loader/LoaderMutationDots';
 
 // Protected route: Only accessible if the user is authenticated
-const ProtectedRoute: React.FC = () => {
+const ProtectedRoute = () => {
   const [isAuthenticated, setIsAuthenticated] = useState<boolean | null>(null);
 
   useEffect(() => {
@@ -27,7 +27,7 @@ const ProtectedRoute: React.FC = () => {
 };
 
 // Unprotected route: Redirects to home if the user is authenticated
-const UnprotectedRoute: React.FC = () => {
+const UnprotectedRoute = () => {
   const [isAuthenticated, setIsAuthenticated] = useState<boolean | null>(null);
 
   useEffect(() => {

@@ -1,12 +1,4 @@
-// components/Checkbox.tsx
-import React from 'react';
-
-interface CheckboxProps {
-  name: string;
-  checked: boolean;
-  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
-  label: string;
-}
+import {CheckboxProps} from '../../types/components/checkbox';
 
 const Checkbox = ({name, checked, onChange, label}: CheckboxProps) => {
   return (

@@ -1,10 +1,5 @@
-import React from 'react';
 import {RatingStars} from '../RatingStars/RatingStars';
-
-interface ReviewSummaryProps {
-  rating: number;
-  percentage: number;
-}
+import {ReviewSummaryProps} from '../../types/components/reviewsSummary';
 
 const ReviewsSummary = ({rating, percentage}: ReviewSummaryProps) => (
   <div className="flex items-center">

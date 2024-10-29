@@ -1,15 +1,6 @@
-// components/Button.tsx
-import React, {BaseSyntheticEvent} from 'react';
+import {ButtonProps} from '../../types/components/button';
 
-interface ButtonProps {
-  onClick?: (e?: BaseSyntheticEvent) => void;
-  type?: 'button' | 'submit' | 'reset';
-  className?: string;
-  children: React.ReactNode;
-  disabled?: boolean;
-}
-
-const Button: React.FC<ButtonProps> = ({onClick, type = 'button', className = '', children, disabled = false}) => {
+const Button = ({onClick, type = 'button', className = '', children, disabled = false}: ButtonProps) => {
   return (
     <button
       onClick={onClick}

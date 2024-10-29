@@ -4,7 +4,7 @@ interface ProductGalleryProps {
   images: string[];
 }
 
-const ProductGallery: React.FC<ProductGalleryProps> = ({images}) => {
+const ProductGallery = ({images}: ProductGalleryProps) => {
   // State to hold the currently selected image
   const [selectedImage, setSelectedImage] = useState(images[0]);
 

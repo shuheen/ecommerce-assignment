@@ -13,7 +13,7 @@ interface ProductPriceProps {
   discountPercentage?: number;
 }
 
-const ProductPrice: React.FC<ProductPriceProps> = ({price, discountPercentage}) => (
+const ProductPrice = ({price, discountPercentage}: ProductPriceProps) => (
   <div className="flex flex-wrap gap-4 mt-4">
     <p className="text-gray-800 text-xl font-bold">${price}</p>
     {discountPercentage && (
@@ -29,23 +29,14 @@ interface ProductDescriptionProps {
   description: string;
 }
 
-const ProductDescription: React.FC<ProductDescriptionProps> = ({description}) => (
+const ProductDescription = ({description}: ProductDescriptionProps) => (
   <div className="mt-8">
     <h3 className="text-xl font-bold text-gray-800">About the product</h3>
     <p className="mt-4 text-sm text-gray-800">{description}</p>
   </div>
 );
 
-const ProductInfo: React.FC<Product> = ({
-  id,
-  images,
-  title,
-  price,
-  category,
-  discountPercentage,
-  description,
-  thumbnail,
-}) => {
+const ProductInfo = ({id, images, title, price, category, discountPercentage, description, thumbnail}: Product) => {
   const [cart, setCart] = useRecoilState<CartItem[]>(cartAtom);
 
   const handleAddToCart = () => {

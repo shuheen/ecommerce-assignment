@@ -1,12 +1,6 @@
-// components/Form.tsx
-import React from 'react';
+import {FormProps} from '../../types/components/form';
 
-interface FormProps {
-  onSubmit: (e: React.FormEvent<HTMLFormElement>) => void;
-  children: React.ReactNode;
-}
-
-const Form: React.FC<FormProps> = ({onSubmit, children}) => {
+const Form = ({onSubmit, children}: FormProps) => {
   return (
     <form onSubmit={onSubmit} className="space-y-4">
       {children}

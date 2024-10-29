@@ -1,5 +1,3 @@
-import React from 'react';
-
 const CategoriesCardLoader = () => {
   return (
     <div className="flex gap-4 justify-start items-center w-full">

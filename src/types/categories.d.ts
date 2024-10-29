@@ -1,11 +1,11 @@
-type CategoriesList = {
+interface CategoriesList {
   slug: string;
   name: string;
   url: string;
-};
-type CategoriesFilterTopProps = {
+}
+interface CategoriesFilterTopProps {
   onChange?: (value: string) => void;
   selected: string;
-};
+}
 
 export {CategoriesFilterTopProps, CategoriesList};

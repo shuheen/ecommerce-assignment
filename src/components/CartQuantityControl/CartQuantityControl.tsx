@@ -1,16 +1,8 @@
-import React, {BaseSyntheticEvent} from 'react';
 import {FiMinus} from 'react-icons/fi';
 import {BiPlus} from 'react-icons/bi';
 import {GoTrash} from 'react-icons/go';
 import Button from '../Button/Button';
-
-interface CartQuantityControlProps {
-  quantity: number;
-  onIncrement: (e?: BaseSyntheticEvent) => void;
-  onDecrement: (e?: BaseSyntheticEvent) => void;
-  onRemove: (e?: BaseSyntheticEvent) => void;
-  className?: string;
-}
+import {CartQuantityControlProps} from '../../types/components/cartQuantityControl';
 
 const CartQuantityControl = ({quantity, onIncrement, onDecrement, onRemove}: CartQuantityControlProps) => {
   return (

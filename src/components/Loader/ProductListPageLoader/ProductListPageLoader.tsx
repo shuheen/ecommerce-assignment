@@ -1,4 +1,3 @@
-import React from 'react';
 import ProductCardLoader from '../ProductCardLoader';
 
 const ProductListPageLoader = () => {

@@ -1,8 +1,4 @@
-import React from 'react';
-
-interface RatingStarsProps {
-  rating: number;
-}
+import {RatingStarsProps} from '../../types/components/ratingStar';
 
 export const RatingStars = ({rating}: RatingStarsProps) => {
   const stars = Array(5)
