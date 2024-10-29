@@ -34,15 +34,16 @@ export default function ProductList() {
   const limit = 10; // Set limit for products per page
   const loadMoreRef = useRef<HTMLDivElement | null>(null);
 
-  const {data, error, fetchNextPage, hasNextPage, isFetchingNextPage, isLoading} = useInfiniteQuery<ProductsList>(
-    ['products', selectedCategory],
-    ({pageParam = 0}) => fetchProducts(selectedCategory, pageParam, limit),
-    {
-      getNextPageParam: (lastPage, allPages) => {
-        return lastPage.products.length < limit ? undefined : allPages.length * limit;
-      },
-    }
-  );
+const {data, error, fetchNextPage, hasNextPage, isFetchingNextPage, isLoading} = useInfiniteQuery<ProductsList>(
+  ['products', selectedCategory],
+  ({pageParam = 0}) => fetchProducts(selectedCategory, pageParam, limit),
+  {
+    getNextPageParam: (lastPage, allPages) => {
+      return lastPage.products.length < limit ? undefined : allPages.length * limit;
+    },
+    cacheTime: 1000 * 60 * 5, // Cache time set to 5 minutes (in milliseconds)
+  }
+);
 
   const handleOnChange = (value: string) => {
     setSelectedCategory(value);
