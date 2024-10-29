@@ -61,9 +61,9 @@ const Header = () => {
               {isAuthenticated ? (
                 <Button
                   onClick={handleLogout}
-                  className="!text-gray-800 hover:!bg-gray-100 !bg-white font-medium rounded-lg text-sm px-4 py-2 sm:max-w-[20%]"
+                  className="!text-gray-800 hover:!bg-gray-100 !bg-white font-medium rounded-lg text-sm px-1 !text-center py-2 max-w-[40px] "
                 >
-                  Logout
+                  <LuLogOut size={20} />
                 </Button>
               ) : (
                 <Link
@@ -88,9 +88,9 @@ const Header = () => {
               {isAuthenticated ? (
                 <Button
                   onClick={handleLogout}
-                  className="!text-gray-800 hover:!bg-gray-100 !bg-white font-medium rounded-lg text-sm px-4 py-2 sm:max-w-[20%]"
+                  className="!text-gray-800 hover:!bg-gray-100 !bg-white font-medium rounded-lg text-sm px-1 py-2 sm:max-w-[45px]"
                 >
-                  Logout
+                  <LuLogOut />
                 </Button>
               ) : (
                 <Link

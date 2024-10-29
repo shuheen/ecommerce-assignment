@@ -13,7 +13,7 @@ const Cart = () => {
   const total = subtotal + shipping + tax;
 
   return (
-    <div className="font-sans max-w-5xl max-md:max-w-xl mx-auto bg-white py-4">
+    <div className="max-w-screen-xl md:max-w-screen-xl px-6 mx-auto bg-white py-4">
       {!cart.length ? (
         <div className="h-[calc(100vh-200px)] flex items-center justify-center flex-col">
           <img src="/images/empty-cart.png" alt="cart" width={300} />
