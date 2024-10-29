@@ -25,7 +25,8 @@ const addToCart = (
   images: string[],
   title: string,
   price: number,
-  category: string
+  category: string,
+  thumbnail: string
 ) => {
   const existingItem = prevCart.find((item) => item.id === id);
 
@@ -34,7 +35,7 @@ const addToCart = (
     return prevCart.map((item) => (item.id === id ? {...item, quantity: item.quantity + 1} : item)) as CartItem[];
   } else {
     // Add a new item to the cart
-    const newItem: CartItem = {id, images, title, price, category, quantity: 1};
+    const newItem: CartItem = {id, images, title, price, category, quantity: 1, thumbnail};
     showSuccessToast(`${title} added to cart!`); // Show success toast
     return [...prevCart, newItem];
   }

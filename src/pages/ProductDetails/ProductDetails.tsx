@@ -4,7 +4,6 @@ import ProductGallery from './ProductGallery/ProductGallery';
 import ProductInfo from './ProductInfo/ProductInfo';
 import {fetchProductDetails} from '../../services/products';
 import {useLocation} from 'react-router-dom';
-import ProductListPageLoader from '../../components/Loader/ProductListPageLoader/ProductListPageLoader';
 import LoaderMutationDots from '../../components/Loader/LoaderMutationDots';
 
 const ProductDetails = () => {

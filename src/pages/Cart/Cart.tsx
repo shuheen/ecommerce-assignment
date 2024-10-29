@@ -2,12 +2,11 @@ import {useRecoilState} from 'recoil';
 import {cartAtom} from '../../state/cartAtom';
 import CartItem from './CartItem/CartItem';
 import OrderSummary from './OrderSummary/OrderSummary';
-import {Link} from 'react-router-dom';
-import {removeFromCart} from '../../utils/products';
+import {Link, useNavigate} from 'react-router-dom';
 
 const Cart = () => {
   const [cart] = useRecoilState(cartAtom);
-
+  const navigate = useNavigate();
   const subtotal = cart.reduce((total, item) => total + item.price * item.quantity, 0);
   const shipping = 2.0;
   const tax = subtotal * 0.01;
@@ -39,7 +38,7 @@ const Cart = () => {
               tax={tax}
               total={total}
               onCheckout={() => console.log('Checkout button clicked')}
-              onContinueShopping={() => console.log('Continue Shopping button clicked')}
+              onContinueShopping={() => navigate('/products')}
             />
           </div>
         </>

@@ -38,7 +38,7 @@ const CartItem = ({item}: CartItemProps) => {
     <motion.div
       initial={{opacity: 0, x: -50}} // Start slightly above and transparent
       animate={control} // Animate to original position and full opacity
-      className="grid grid-cols-3 items-start gap-4"
+      className="grid grid-cols-3 items-start gap-1 p-4 bg-white border rounded-md shadow-lg"
       key={item.id}
     >
       <div className="col-span-2 flex items-start gap-4">

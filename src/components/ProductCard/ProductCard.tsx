@@ -24,7 +24,7 @@ const ProductCard = ({id, images, title, price, category, thumbnail}: Product) =
     await buttonControls.start({opacity: 0, x: 50, transition: {duration: 0.2}}); // Flyaway effect
 
     // Add item to cart
-    setCart((prevCart) => addToCart(prevCart, id, images, title, price, category));
+    setCart((prevCart) => addToCart(prevCart, id, images, title, price, category, thumbnail));
 
     // Final fade-out and reset after animation completes
     setTimeout(() => {

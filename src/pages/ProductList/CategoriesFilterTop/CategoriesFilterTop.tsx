@@ -45,10 +45,10 @@ const CategoriesFilterTop = ({onChange, selected}: CategoriesFilterTopProps) => 
           <CategoriesCardLoader />
         ) : (
           <Button
-            className={`!rounded-full !bg-transparent !text-gray-600 border font-medium px-7 py-2 ${
+            className={`!rounded-full bg-transparent !text-gray-600 border font-medium px-7 py-2 ${
               selected === 'all'
-                ? '!border-orange-500 !text-white hover:!bg-orange-600 !bg-orange-500'
-                : 'text-gray-600 border-gray-400 hover:bg-gray-200'
+                ? '!border-orange-500 !text-white hover:!bg-orange-100 !bg-orange-500'
+                : 'text-gray-600 border-gray-400 hover:!bg-gray-200'
             }`}
             onClick={() => handleClick('all')}
           >
@@ -62,10 +62,10 @@ const CategoriesFilterTop = ({onChange, selected}: CategoriesFilterTopProps) => 
           return (
             <Button
               key={categoryId}
-              className={`!rounded-full !bg-transparent !text-gray-600 border font-medium px-7 py-2 text-nowrap ${
+              className={`!rounded-full bg-transparent !text-gray-600 border font-medium px-7 py-2 text-nowrap ${
                 selected === categoryId
-                  ? '!border-orange-500 !text-white hover:bg-orange-600 !bg-orange-500'
-                  : 'text-gray-600 border-gray-400 hover:bg-gray-200'
+                  ? '!border-orange-500 !text-white hover:bg-orange-100 !bg-orange-500'
+                  : 'border-gray-400 hover:!bg-gray-200'
               }`}
               onClick={() => handleClick(categoryId)}
             >

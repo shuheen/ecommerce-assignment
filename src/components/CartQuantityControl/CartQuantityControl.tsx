@@ -14,7 +14,7 @@ interface CartQuantityControlProps {
 
 const CartQuantityControl = ({quantity, onIncrement, onDecrement, onRemove}: CartQuantityControlProps) => {
   return (
-    <div className="mt-4 flex items-center justify-between">
+    <div className="mt-4 flex items-center justify-between gap-3">
       <Button
         onClick={onRemove}
         className="px-3 rounded-md py-3 hover:text-red-700 !bg-white hover:!bg-gray-100 flex w-auto !text-red-600"

@@ -36,11 +36,20 @@ const ProductDescription: React.FC<ProductDescriptionProps> = ({description}) =>
   </div>
 );
 
-const ProductInfo: React.FC<Product> = ({id, images, title, price, category, discountPercentage, description}) => {
+const ProductInfo: React.FC<Product> = ({
+  id,
+  images,
+  title,
+  price,
+  category,
+  discountPercentage,
+  description,
+  thumbnail,
+}) => {
   const [cart, setCart] = useRecoilState<CartItem[]>(cartAtom);
 
   const handleAddToCart = () => {
-    setCart((prevCart) => addToCart(prevCart, id, images, title, price, category));
+    setCart((prevCart) => addToCart(prevCart, id, images, title, price, category, thumbnail));
   };
 
   const handleIncrement = () => {
