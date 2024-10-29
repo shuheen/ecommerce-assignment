@@ -1,51 +1,64 @@
-import {motion} from 'framer-motion';
-import {BsTrash} from 'react-icons/bs';
-import {FiMinus} from 'react-icons/fi';
-import {BiPlus} from 'react-icons/bi';
+import {motion, useAnimation} from 'framer-motion';
 import {CartItem as CartItemType} from '../../../types/cart';
+import CartQuantityControl from '../../../components/CartQuantityControl/CartQuantityControl';
+import {useRecoilState} from 'recoil';
+import {cartAtom} from '../../../state/cartAtom';
+import {addOneItem, removeFromCart, removeOneItem} from '../../../utils/products';
+import {useEffect} from 'react';
 
 interface CartItemProps {
   item: CartItemType;
-  onRemove: (id: number) => void;
-  onQuantityChange: (type: 'inc' | 'dec', id: number) => void;
 }
 
-const CartItem = ({item, onRemove, onQuantityChange}: CartItemProps) => {
+const CartItem = ({item}: CartItemProps) => {
+  const [cart, setCart] = useRecoilState<CartItemType[]>(cartAtom);
+  const {id, title} = item;
+  const control = useAnimation();
+
+  const handleIncrement = () => {
+    setCart((prevCart) => addOneItem(prevCart, id));
+  };
+
+  const handleDecrement = () => {
+    setCart((prevCart) => removeOneItem(prevCart, id, title));
+  };
+
+  const handleRemoveFromCart = async () => {
+    await control.start({opacity: 0, x: -150, transition: {duration: 0.2}});
+
+    setCart((prevCart) => removeFromCart(prevCart, id, title));
+  };
+
+  const storeCartItem = cart.find((item) => item.id === id);
+
+  useEffect(() => {
+    control.start({opacity: 1, x: 0, transition: {duration: 0.4}});
+  }, []);
   return (
     <motion.div
       initial={{opacity: 0, x: -50}} // Start slightly above and transparent
-      animate={{opacity: 1, x: 0}} // Animate to original position and full opacity
-      exit={{opacity: 0, x: -50}} // Animate back to the above position and transparent when removed
-      transition={{duration: 0.3}} // Duration of the animation
+      animate={control} // Animate to original position and full opacity
       className="grid grid-cols-3 items-start gap-4"
+      key={item.id}
     >
       <div className="col-span-2 flex items-start gap-4">
         <div className="w-28 h-28 max-sm:w-24 max-sm:h-24 shrink-0 bg-gray-100 p-2 rounded-md">
           <img src={item.images[0]} alt={item.title} className="w-full h-full object-contain" />
         </div>
 
-        <div className="flex flex-col">
+        <div className="flex flex-col items-start">
           <h3 className="text-base font-bold text-gray-800">{item.title}</h3>
-
-          <button
-            type="button"
-            className="mt-6 font-semibold text-red-500 text-xs flex items-center gap-1 shrink-0"
-            onClick={() => onRemove(item.id)}
-          >
-            <BsTrash />
-            REMOVE
-          </button>
+          <CartQuantityControl
+            quantity={storeCartItem!.quantity}
+            onIncrement={handleIncrement}
+            onDecrement={handleDecrement}
+            onRemove={handleRemoveFromCart}
+          />
         </div>
       </div>
 
       <div className="ml-auto">
         <h4 className="text-lg max-sm:text-base font-bold text-gray-800">${item.price}</h4>
-
-        <div className="mt-6 flex items-center px-3 py-1.5 border border-gray-300 text-gray-800 text-xs outline-none bg-transparent rounded-md">
-          <FiMinus className="cursor-pointer" onClick={() => onQuantityChange('dec', item.id)} />
-          <span className="mx-3 font-bold">{item.quantity}</span>
-          <BiPlus className="cursor-pointer" onClick={() => onQuantityChange('inc', item.id)} />
-        </div>
       </div>
     </motion.div>
   );

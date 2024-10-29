@@ -1,11 +1,33 @@
 import {useInfiniteQuery} from 'react-query';
-import {Product, ProductsList} from './../../types/product';
-import ProductCard from '../../components/ProductCard/ProductCard';
+import {ProductsList} from './../../types/product';
 import CategoriesFilterTop from './CategoriesFilterTop/CategoriesFilterTop';
 import {fetchProducts} from '../../services/products';
 import {useState, useRef, useCallback, useEffect} from 'react';
 import ProductListPageLoader from '../../components/Loader/ProductListPageLoader/ProductListPageLoader';
 import {showErrorToast} from '../../utils/toastUtils';
+import ProductGrid from './ProductGrid/ProductGrid';
+
+// Reusable component for loading state
+const LoadingState = () => (
+  <div className="flex justify-center py-4">
+    <ProductListPageLoader />
+  </div>
+);
+
+// Reusable component for error state
+const ErrorState = () => (
+  <div className="h-screen flex flex-col justify-center items-center">
+    <span className="text-lg font-bold text-gray-500">Something went wrong...</span>
+  </div>
+);
+
+// Reusable component for no products state
+const NoProductsState = () => (
+  <div className="h-[calc(100vh-340px)] flex flex-col justify-center items-center w-full">
+    <img src="/images/no-product.webp" className="max-w-[250px]" alt="No Products" />
+    <span className="text-lg font-bold text-gray-500">No Products Found</span>
+  </div>
+);
 
 export default function ProductList() {
   const [selectedCategory, setSelectedCategory] = useState('all');
@@ -57,29 +79,15 @@ export default function ProductList() {
     <div className="bg-gray-50 pb-24">
       <div className="max-w-screen-xl mx-auto">
         <CategoriesFilterTop onChange={handleOnChange} selected={selectedCategory} />
-
-        <div className={`${products.length && 'grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4'} px-4 py-6`}>
-          {isLoading ? (
-            // Show loading indicator only for products
-            <ProductListPageLoader />
-          ) : error ? (
-            <div className="h-screen flex flex-col justify-center items-center">
-              <span className="text-lg font-bold text-gray-500">Something went wrong...</span>
-            </div>
-          ) : products.length === 0 ? (
-            // Show message when there are no products
-            <div className="h-[calc(100vh-340px)] flex flex-col justify-center items-center w-full">
-              <img src="/images/no-product.webp" className="max-w-[250px]" alt="No Products" />
-              <span className="text-lg font-bold text-gray-500">No Products Found</span>
-            </div>
-          ) : (
-            // Render product cards when data is available
-            data?.pages.map((page) =>
-              page.products.map((product: Product) => <ProductCard key={product.id} {...product} />)
-            )
-          )}
-        </div>
-
+        {isLoading ? (
+          <LoadingState />
+        ) : error ? (
+          <ErrorState />
+        ) : products.length === 0 ? (
+          <NoProductsState />
+        ) : (
+          <ProductGrid products={products} />
+        )}
         {/* Infinite Scroll Loader */}
         <div ref={loadMoreRef} className="flex justify-center py-4">
           {isFetchingNextPage ? (

@@ -7,7 +7,7 @@ export interface Product {
   category: string;
   discountPercentage?: number;
   description?: string;
-  thumbnail: string;
+  thumbnail?: string;
 }
 
 export interface ProductsList {

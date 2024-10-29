@@ -3,6 +3,7 @@ import {useRef, useEffect} from 'react';
 import {fetchCategories} from '../../../services/categories';
 import CategoriesCardLoader from '../../../components/Loader/CategoriesCardLoader';
 import {CategoriesFilterTopProps, CategoriesList} from '../../../types/categories';
+import Button from '../../../components/Button/Button';
 
 const CategoriesFilterTop = ({onChange, selected}: CategoriesFilterTopProps) => {
   const {data, error, isLoading} = useQuery<CategoriesList[]>('/products/categories', fetchCategories, {
@@ -43,33 +44,33 @@ const CategoriesFilterTop = ({onChange, selected}: CategoriesFilterTopProps) => 
         {isLoading ? (
           <CategoriesCardLoader />
         ) : (
-          <button
-            className={`rounded-full border font-medium px-7 py-2 ${
+          <Button
+            className={`!rounded-full !bg-transparent !text-gray-600 border font-medium px-7 py-2 ${
               selected === 'all'
-                ? 'border-orange-700 text-white hover:bg-orange-900 bg-orange-700'
+                ? '!border-orange-500 !text-white hover:!bg-orange-600 !bg-orange-500'
                 : 'text-gray-600 border-gray-400 hover:bg-gray-200'
             }`}
             onClick={() => handleClick('all')}
           >
             All
-          </button>
+          </Button>
         )}
 
         {data?.map((category) => {
           const {name} = category;
           const categoryId = name.replace(/ '/g, '').toLowerCase();
           return (
-            <button
+            <Button
               key={categoryId}
-              className={`rounded-full border font-medium px-7 py-2 text-nowrap ${
+              className={`!rounded-full !bg-transparent !text-gray-600 border font-medium px-7 py-2 text-nowrap ${
                 selected === categoryId
-                  ? 'border-orange-700 text-white hover:bg-orange-900 bg-orange-700'
+                  ? '!border-orange-500 !text-white hover:bg-orange-600 !bg-orange-500'
                   : 'text-gray-600 border-gray-400 hover:bg-gray-200'
               }`}
               onClick={() => handleClick(categoryId)}
             >
               {name}
-            </button>
+            </Button>
           );
         })}
       </div>

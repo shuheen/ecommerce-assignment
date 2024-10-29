@@ -1,3 +1,5 @@
+import Button from '../../../components/Button/Button';
+
 interface OrderSummaryProps {
   subtotal: number;
   shipping: number;
@@ -36,20 +38,20 @@ const OrderSummary = ({subtotal, shipping, tax, total, onCheckout, onContinueSho
       </ul>
 
       <div className="mt-6 space-y-3">
-        <button
+        <Button
           type="button"
           onClick={onCheckout}
-          className="text-sm w-full font-semibold tracking-wide bg-gray-800 hover:bg-gray-900 text-white rounded-md py-2.5"
+          className="text-sm w-full font-semibold tracking-wide bg-orange-600 hover:bg-orange-700 text-white rounded-md py-2.5"
         >
           Checkout
-        </button>
-        <button
+        </Button>
+        <Button
           type="button"
           onClick={onContinueShopping}
-          className="text-sm w-full font-semibold tracking-wide bg-transparent text-gray-800 border border-gray-300 rounded-md py-2.5"
+          className="text-sm w-full font-semibold tracking-wide !bg-transparent !text-gray-800 !border-2 hover:!bg-gray-200 !border-gray-300 rounded-md py-2.5"
         >
           Continue Shopping
-        </button>
+        </Button>
       </div>
     </div>
   );

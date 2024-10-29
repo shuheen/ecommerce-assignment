@@ -41,6 +41,6 @@ export const useToast = () => {
 export const ToastProvider = ({children}: {children: JSX.Element}) => (
   <>
     {children}
-    <ToastContainer />
+    <ToastContainer limit={3} className="toast-custom" />
   </>
 );

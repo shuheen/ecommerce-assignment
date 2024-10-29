@@ -5,13 +5,15 @@ import {useRecoilValue} from 'recoil';
 import {cartAtom} from '../../state/cartAtom';
 import {getAuth, onAuthStateChanged, signOut} from 'firebase/auth';
 import ProductSearch from '../ProductSearch/ProductSearch';
-import {CiLogout} from 'react-icons/ci';
 import {LuLogOut} from 'react-icons/lu';
+import {motion, useAnimation} from 'framer-motion';
+import Button from '../Button/Button';
 
 const Header = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const cart = useRecoilValue(cartAtom);
   const cartCount = cart.reduce((total, item) => total + item.quantity, 0);
+  const controls = useAnimation();
 
   useEffect(() => {
     const auth = getAuth();
@@ -19,6 +21,17 @@ const Header = () => {
       setIsAuthenticated(!!user);
     });
   }, []);
+
+  // Animate the cart icon when the cartCount changes
+  useEffect(() => {
+    if (cartCount > 0) {
+      controls.start({
+        scale: [1, 1.5, 1],
+        rotate: [0, -30, 30, -30, 30, 0],
+        transition: {duration: 0.4},
+      });
+    }
+  }, [cartCount, controls]);
 
   const handleLogout = async () => {
     const auth = getAuth();
@@ -37,19 +50,21 @@ const Header = () => {
             {/* Cart and Auth Buttons for Large Screens */}
             <div className="hidden md:flex items-center gap-4">
               <ProductSearch />
-              <Link to="/cart" className="p-2 hover:bg-gray-300 rounded-lg relative">
-                <FaCartShopping size={24} className="text-gray-600" />
+              <Link to="/cart" className="p-3 hover:bg-gray-100 rounded-lg relative header-cart">
+                <motion.div animate={controls}>
+                  <FaCartShopping size={24} className="text-gray-600" />
+                </motion.div>
                 <span className="absolute top-0 right-0 w-5 h-5 bg-red-500 text-white rounded-full text-xs text-center font-medium">
                   {cartCount}
                 </span>
               </Link>
               {isAuthenticated ? (
-                <button
+                <Button
                   onClick={handleLogout}
-                  className="text-gray-800 hover:bg-gray-100 font-medium rounded-lg text-sm px-4 py-2"
+                  className="!text-gray-800 hover:!bg-gray-100 !bg-white font-medium rounded-lg text-sm px-4 py-2 sm:max-w-[20%]"
                 >
                   Logout
-                </button>
+                </Button>
               ) : (
                 <Link
                   to="/login"
@@ -62,19 +77,21 @@ const Header = () => {
 
             {/* Mobile View: Cart and Auth Buttons */}
             <div className="flex md:hidden items-center gap-4">
-              <Link to="/cart" className="p-2 hover:bg-gray-300 rounded-lg relative">
-                <FaCartShopping size={24} className="text-gray-600" />
+              <Link to="/cart" className="p-2 hover:bg-gray-100 rounded-lg relative header-cart">
+                <motion.div animate={controls}>
+                  <FaCartShopping size={24} className="text-gray-600" />
+                </motion.div>
                 <span className="absolute top-0 right-0 w-5 h-5 bg-red-500 text-white rounded-full text-xs text-center font-medium">
                   {cartCount}
                 </span>
               </Link>
               {isAuthenticated ? (
-                <button
+                <Button
                   onClick={handleLogout}
-                  className="text-gray-800 hover:bg-gray-100 font-medium rounded-lg text-sm px-4 pr-0 py-2"
+                  className="!text-gray-800 hover:!bg-gray-100 !bg-white font-medium rounded-lg text-sm px-4 py-2 sm:max-w-[20%]"
                 >
-                  <LuLogOut size={20} />
-                </button>
+                  Logout
+                </Button>
               ) : (
                 <Link
                   to="/login"
