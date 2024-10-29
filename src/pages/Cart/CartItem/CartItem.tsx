@@ -43,7 +43,7 @@ const CartItem = ({item}: CartItemProps) => {
     >
       <div className="col-span-2 flex items-start gap-4">
         <div className="w-28 h-28 max-sm:w-24 max-sm:h-24 shrink-0 bg-gray-100 p-2 rounded-md">
-          <img src={item.images[0]} alt={item.title} className="w-full h-full object-contain" />
+          <img src={item.thumbnail} alt={item.title} className="w-full h-full object-contain" />
         </div>
 
         <div className="flex flex-col items-start">

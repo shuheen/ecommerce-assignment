@@ -36,6 +36,7 @@ const Input: React.FC<InputProps> = ({
         onChange={onChange}
         className={`w-full text-gray-800 text-sm border border-gray-300 px-4 py-3 rounded-md outline-blue-600 ${className}`}
         placeholder={placeholder}
+        autoComplete="off"
       />
       {showIcon && icon && (
         <span
