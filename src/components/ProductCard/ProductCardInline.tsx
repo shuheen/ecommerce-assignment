@@ -1,7 +1,7 @@
 import {Product} from '../../types/product';
 import {Link} from 'react-router-dom';
 
-const ProductCardInline = ({title, images, id, price}: Product) => {
+const ProductCardInline = ({title, thumbnail, id, price}: Product) => {
   return (
     <Link
       to={`/products/${id}`}
@@ -9,7 +9,7 @@ const ProductCardInline = ({title, images, id, price}: Product) => {
     >
       <img
         className="object-contain w-12 rounded-t-lg  max-h-12 md:h-auto md:rounded-none md:rounded-s-lg"
-        src={images[0]}
+        src={thumbnail}
         alt={title}
       />
       <div className="flex flex-col justify-between leading-normal">
