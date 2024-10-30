@@ -1,4 +1,3 @@
-import React from 'react';
 import Reviews from '../Reviews/Reviews';
 import {useRecoilState} from 'recoil';
 import {cartAtom} from '../../../state/cartAtom';

@@ -1,5 +1,3 @@
-import React from 'react';
-
 import ReviewsSummary from '../../../components/ReviewsSummary/ReviewsSummary';
 
 const Reviews = () => (

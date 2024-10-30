@@ -12,7 +12,7 @@ import Button from '../Button/Button';
 
 const ProductCard = ({id, images, title, price, category, thumbnail}: Product) => {
   const [cart, setCart] = useRecoilState<CartItem[]>(cartAtom);
-  const [isAdded, setIsAdded] = useState(false);
+  const [, setIsAdded] = useState(false);
   const buttonControls = useAnimation();
 
   const handleAddToCart = async (e: BaseSyntheticEvent) => {

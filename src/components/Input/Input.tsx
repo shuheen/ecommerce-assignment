@@ -1,5 +1,4 @@
 // components/Input.tsx
-import React from 'react';
 import {InputProps} from '../../types/components/input';
 
 const Input = ({

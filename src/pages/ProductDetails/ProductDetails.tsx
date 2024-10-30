@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import {useEffect} from 'react';
 import {useQuery} from 'react-query';
 import ProductGallery from './ProductGallery/ProductGallery';
 import ProductInfo from './ProductInfo/ProductInfo';

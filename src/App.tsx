@@ -11,7 +11,6 @@ import Register from './pages/Authentication/Register/Register';
 import {ProtectedRoute, UnprotectedRoute} from './routes/Routes';
 import ProductDetails from './pages/ProductDetails/ProductDetails';
 
-const AnimatedHome = withPageTransition(Home);
 const AnimatedProductList = withPageTransition(ProductList);
 const AnimatedCart = withPageTransition(Cart);
 const AnimatedLogin = withPageTransition(Login);
