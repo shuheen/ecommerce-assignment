@@ -3,7 +3,6 @@ import {Route, Routes, useLocation} from 'react-router-dom';
 import {AnimatePresence} from 'framer-motion';
 
 import withPageTransition from './hoc/withPageTransition'; // Import HOC
-import Home from './pages/Home/Home';
 import ProductList from './pages/ProductList/ProductList';
 import Cart from './pages/Cart/Cart';
 import Login from './pages/Authentication/Login/Login';
