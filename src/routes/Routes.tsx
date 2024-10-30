@@ -1,12 +1,14 @@
 import {useEffect, useState} from 'react';
-import {Navigate, Outlet} from 'react-router-dom';
+import {Navigate, Outlet, useLocation} from 'react-router-dom';
 import {onAuthStateChanged} from 'firebase/auth';
 import {auth} from './../setups/firebaseSetup'; // Adjust based on your setup
 import LoaderMutationDots from '../components/Loader/LoaderMutationDots';
+import {NO_HEADER_PAGES} from '../constants/global';
 
 // Protected route: Only accessible if the user is authenticated
 const ProtectedRoute = () => {
   const [isAuthenticated, setIsAuthenticated] = useState<boolean | null>(null);
+  const location = useLocation();
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
@@ -18,7 +20,7 @@ const ProtectedRoute = () => {
   if (isAuthenticated === null) return <LoaderMutationDots />; // Optionally, add a loading state
 
   return isAuthenticated ? (
-    <div className="mt-[120px] sm:mt-[70px]">
+    <div className="pt-[120px] sm:pt-[70px]">
       <Outlet />
     </div>
   ) : (
@@ -39,7 +41,13 @@ const UnprotectedRoute = () => {
 
   if (isAuthenticated === null) return <LoaderMutationDots />; // Optionally, add a loading state
 
-  return isAuthenticated ? <Navigate to="/" /> : <Outlet />;
+  return isAuthenticated ? (
+    <Navigate to="/" />
+  ) : (
+    <div className={`${!NO_HEADER_PAGES.includes(location.pathname) ? 'pt-[120px] sm:pt-[70px]' : ''}`}>
+      <Outlet />
+    </div>
+  );
 };
 
 export {ProtectedRoute, UnprotectedRoute};

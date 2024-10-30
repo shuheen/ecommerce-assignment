@@ -9,12 +9,14 @@ import Login from './pages/Authentication/Login/Login';
 import Register from './pages/Authentication/Register/Register';
 import {ProtectedRoute, UnprotectedRoute} from './routes/Routes';
 import ProductDetails from './pages/ProductDetails/ProductDetails';
+import ProtectedPage from './pages/ProtectedPage/ProtectedPage';
 
 const AnimatedProductList = withPageTransition(ProductList);
 const AnimatedCart = withPageTransition(Cart);
 const AnimatedLogin = withPageTransition(Login);
 const AnimatedRegister = withPageTransition(Register);
 const AnimatedProductDetails = withPageTransition(ProductDetails);
+const AnimatedProtectedPage = withPageTransition(ProtectedPage);
 
 function App() {
   const location = useLocation();
@@ -23,13 +25,15 @@ function App() {
     <AnimatePresence mode="wait">
       <Routes location={location} key={location.pathname}>
         <Route element={<ProtectedRoute />}>
+          {/* This is just to test the Protected Route */}
+          <Route path="/protected" element={<AnimatedProtectedPage />} />
+        </Route>
+
+        <Route element={<UnprotectedRoute />}>
           <Route path="/" element={<AnimatedProductList />} />
           <Route path="/products" element={<AnimatedProductList />} />
           <Route path="/products/:id" element={<AnimatedProductDetails />} />
           <Route path="/cart" element={<AnimatedCart />} />
-        </Route>
-
-        <Route element={<UnprotectedRoute />}>
           <Route path="/login" element={<AnimatedLogin />} />
           <Route path="/register" element={<AnimatedRegister />} />
         </Route>

@@ -9,16 +9,16 @@ import {QueryClient, QueryClientProvider} from 'react-query';
 import {RecoilRoot} from 'recoil';
 import LoaderMutationDots from './components/Loader/LoaderMutationDots';
 import {ToastProvider} from './Providers/ToasterProvider'; // Adjust the import path as necessary
+import {NO_HEADER_PAGES} from './constants/global';
 
 const queryClient = new QueryClient();
 
 const Root = () => {
   const location = useLocation();
-  const hideHeaderRoutes = ['/login', '/register'];
 
   return (
     <Suspense fallback={<LoaderMutationDots />}>
-      {!hideHeaderRoutes.includes(location.pathname) && <Header />}
+      {!NO_HEADER_PAGES.includes(location.pathname) && <Header />}
       <App />
     </Suspense>
   );
