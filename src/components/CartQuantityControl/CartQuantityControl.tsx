@@ -6,10 +6,10 @@ import {CartQuantityControlProps} from '../../types/components/cartQuantityContr
 
 const CartQuantityControl = ({quantity, onIncrement, onDecrement, onRemove}: CartQuantityControlProps) => {
   return (
-    <div className="mt-4 flex items-center justify-between gap-3">
+    <div className="mt-4 flex items-center justify-start gap-3">
       <Button
         onClick={onRemove}
-        className="px-3 rounded-md py-3 hover:text-red-700 !bg-white hover:!bg-gray-100 flex w-auto !text-red-600"
+        className="px-3 rounded-md py-3 hover:text-red-700 !bg-white hover:!bg-gray-100 flex w-[45px] !text-red-600"
       >
         <GoTrash size={20} />
       </Button>
