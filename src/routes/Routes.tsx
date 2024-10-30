@@ -8,7 +8,6 @@ import {NO_HEADER_PAGES} from '../constants/global';
 // Protected route: Only accessible if the user is authenticated
 const ProtectedRoute = () => {
   const [isAuthenticated, setIsAuthenticated] = useState<boolean | null>(null);
-  const location = useLocation();
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
@@ -31,7 +30,7 @@ const ProtectedRoute = () => {
 // Unprotected route: Redirects to home if the user is authenticated
 const UnprotectedRoute = () => {
   const [isAuthenticated, setIsAuthenticated] = useState<boolean | null>(null);
-
+  const location = useLocation();
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
       setIsAuthenticated(!!user);
